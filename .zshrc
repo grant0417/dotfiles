@@ -104,4 +104,3 @@ prompt_context() {
   fi
 }
 
-
