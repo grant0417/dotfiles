@@ -66,10 +66,11 @@ plugins=(
 	git 
 	python 
 	k 
-	vi-mode 
 	pip
 	zsh-syntax-highlighting
-)
+	colored-man-pages
+	)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
