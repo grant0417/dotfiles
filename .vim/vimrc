@@ -1,19 +1,24 @@
 " vimrc file
 
 " Plugins
-
 call plug#begin('~/.vim/plugged')
 
  Plug 'valloric/youcompleteme'
  Plug 'lervag/vimtex'
  Plug 'sirver/ultisnips'
-
-call plug#end()
+ Plug 'scrooloose/nerdtree'
+ Plug 'Xuyuanp/nerdtree-git-plugin'
+ Plug 'tpope/vim-fugitive'
+ call plug#end()
 
 " Basic configuration
 set nocompatible
-filetype plugin on
+
+filetype indent plugin on
+packadd termdebug
+
 syntax on
+
 set encoding=utf-8
 set number relativenumber
 set autoindent
@@ -24,23 +29,30 @@ set ruler
 set wildmenu
 set wildmode=longest,list,full
 set splitbelow splitright
+set completeopt-=preview
 
 runtime macros/matchit.vim
 
-set completeopt-=preview
 
+" YCM configs
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_rust_src_path="/home/grant/Documents/rust-master/src"
 let g:ycm_add_preview_to_completeopt = 0
 
+" Set cursor to vertical line during insert
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
 
+" Vimtex configs
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 
+" Key mappings
 map <F6> :setlocal spell! spelllang=en_us<CR>
+nnoremap gV `[v`]
+
