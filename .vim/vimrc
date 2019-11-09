@@ -1,19 +1,5 @@
 " vimrc file
 
-" Plugins
-call plug#begin('~/.vim/plugged')
-
-Plug 'valloric/youcompleteme'
-Plug 'lervag/vimtex'
-Plug 'sirver/ultisnips'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
-Plug 'rust-lang/rust.vim'
-Plug 'w0rp/ale'
- 
-call plug#end()
-
 " Basic configuration
 set nocompatible
 
@@ -25,15 +11,23 @@ syntax on
 set mouse=a
 set encoding=utf-8
 set number relativenumber
+
 set autoindent
 set backspace=indent,eol,start
 set hidden
+
 set incsearch
 set ignorecase
 set smartcase
+
 set wrapscan
+
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set smarttab
+set softtabstop=2
+
 set ruler
 set wildmenu
 set wildmode=longest,list,full
@@ -41,12 +35,6 @@ set splitbelow splitright
 set completeopt-=preview
 
 runtime macros/matchit.vim
-
-
-" YCM configs
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_rust_src_path = $RUST_SRC_PATH
-let g:ycm_add_preview_to_completeopt = 0
 
 " Set cursor to vertical line during insert
 let &t_ti.="\e[1 q"
@@ -61,14 +49,8 @@ let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 
-"ale configs
-let g:ale_rust_cargo_use_check = 1
-
 " Key mappings
 map <F6> :setlocal spell! spelllang=en_us<CR>
 nnoremap gV `[v`]
 nnoremap j gj
 nnoremap k gk
-
-let g:rustfmt_autosave = 1
-
