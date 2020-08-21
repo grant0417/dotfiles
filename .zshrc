@@ -29,9 +29,6 @@ ZSH_THEME="agnoster"
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
@@ -73,30 +70,24 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+export PATH="$HOME/opt/cross/bin:$HOME/.cargo/bin/:$HOME/.gem/ruby/2.7.0/bin:$PATH"
 
 export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
 export EDITOR='nvim'
 
-# Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-# Example aliases
-alias zshconfig="$EDITOR ~/.zshrc"
-alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias icat="kitty +kitten icat"
+alias kdiff="kitty +kitten diff"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
+
+alias editdots="vim $HOME/Documents/dotfiles/"
+alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
 
 autoload -Uz compinit
 compinit
@@ -110,3 +101,4 @@ prompt_context() {
 }
 
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+

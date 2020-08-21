@@ -2,13 +2,28 @@ call plug#begin()
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'junegunn/fzf'
   Plug 'lervag/vimtex'
+  Plug 'rust-lang/rust.vim'
 call plug#end()
 
 filetype indent plugin on
 packadd termdebug
 
+" deal with colors
+if !has('gui_running')
+  set t_Co=256
+endif
+if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+  " screen does not (yet) support truecolor
+  set termguicolors
+endif
+set background=dark
+let base16colorspace=256
+let g:base16_shell_path="~/.config/nvim/colors/base16-gruvbox-dark-hard.vim"
+colorscheme base16-gruvbox-dark-hard
 syntax on
-color apprentice
+hi Normal ctermbg=NONE
+" Brighter comments
+call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
 
 set termguicolors
 set cmdheight=2
@@ -93,14 +108,6 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -149,6 +156,8 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" List past yanks
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 " Vimtex configs
 let g:tex_flavor='latex'
@@ -156,6 +165,13 @@ let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
+autocmd FileType tex setlocal spell! spelllang=en_us
+
+" Markdown configs
+autocmd FileType markdown setlocal spell! spelllang=en_us
+
+" Rust configs
+let g:rustfmt_autosave = 1
 
 " Key mappings
 map <F6> :setlocal spell! spelllang=en_us<CR>
@@ -163,3 +179,4 @@ nnoremap gV `[v`]
 nnoremap j gj
 nnoremap k gk
 
+let g:vimtex_compiler_progname='nvr'

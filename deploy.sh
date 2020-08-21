@@ -1,3 +1,4 @@
 #/bin/sh
 
-rsync --exclude ".git/" --exclude "deploy.sh" -avh --no-perms . ~
+DEPLOY_DIR=$(dirname $0)/
+rsync --exclude ".git/" --exclude "deploy.sh" -avh --no-perms $DEPLOY_DIR $HOME
