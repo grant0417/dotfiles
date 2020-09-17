@@ -77,6 +77,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 
 export EDITOR='nvim'
+export BROWSER='firefox-developer-edition'
 
 export ARCHFLAGS="-arch x86_64"
 
