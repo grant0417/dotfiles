@@ -1,0 +1,19 @@
+#!/bin/sh
+
+SCREENSHOT_FOLDER=~/Documents/screenshots/
+mkdir -p ${SCREENSHOT_FOLDER}
+
+# desktop or region
+OPTION=$1
+
+FILE=${SCREENSHOT_FOLDER}$( date '+%Y-%m-%d_%H-%M-%S' )_screenshot.png
+
+if [ "$OPTION" == "desktop" ]; then
+  import -window root ${FILE}
+else
+  import ${FILE}
+fi
+
+xclip -selection clipboard -target image/png -i < ${FILE}
+
+dunstify "Screenshot copied to clipboard" --icon=${FILE}

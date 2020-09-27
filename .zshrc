@@ -86,6 +86,7 @@ alias kdiff="kitty +kitten diff"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
+alias newsboat="newsboat --refresh-on-start"
 
 alias editdots="vim $HOME/Documents/dotfiles/"
 alias deploydots="$HOME/Documents/dotfiles/deploy.sh"

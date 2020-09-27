@@ -1,0 +1,129 @@
+[bar/top]
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+
+modules-left = power-menu i3
+modules-center = arch-label date
+modules-right = cpu memory wired-network pulseaudio 
+
+tray-position = right
+tray-maxsize = 32
+
+background = #222
+foreground = #fff
+dpi = 160
+height = 50
+
+font-0 = "Hack Nerd Font:size=12;4"
+
+
+[module/date]
+type = internal/date
+
+date = "%m/%d%"
+time = "%l:%M %p"
+
+date-alt = "%Y/%m/%d"
+time-alt = "%I:%M:%S %p"
+
+label = %{A2:notify-calendar:} %time%  %date% %{A}
+
+
+[module/i3]
+type = internal/i3
+
+label-focused = " %index% "
+label-focused-foreground = #ffffff
+label-focused-background = #3f3f3f
+
+label-unfocused = " %index% "
+
+label-visible = " %index% "
+label-visible-underline = #555555
+
+label-urgent = " %index% "
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <ramp-volume> <label-volume>
+
+label-muted = 婢 muted
+label-muted-foreground = #666
+
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+
+[module/memory]
+type = internal/memory
+
+label =  %percentage_used%%
+
+
+[module/cpu]
+type = internal/cpu
+
+label = 龍 %percentage%%
+
+format = <label> <ramp-coreload>
+
+ramp-coreload-spacing = 0
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+[module/wired-network]
+type = internal/network
+interface = enp5s0
+
+format-connected = <label-connected>
+
+format-disconnected = <label-disconnected>
+
+format-packetloss = <animation-packetloss> <label-connected>
+
+label-connected = 
+label-connected-foreground = #eefafafa
+
+label-disconnected = 
+label-disconnected-foreground = #66ffffff
+
+animation-packetloss-0 = 
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 =   
+animation-packetloss-1-foreground = #000000
+animation-packetloss-framerate = 500
+
+[module/arch-label]
+type = custom/text
+content = 
+
+[module/power-menu]
+type = custom/menu
+
+label-open = "   ⏻ "
+label-close = "   "
+label-separator = |
+
+menu-0-0 = Shutdown 
+menu-0-0-exec = shutdown now
+menu-0-1 = Reboot
+menu-0-1-exec = reboot
+menu-0-2 = Logout
+menu-0-2-exec = i3-msg exit
+menu-0-3 = Lock
+menu-0-3-exec = betterlockscreen --lock dimblur   

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+FILE_FORMAT="aac"
+
+if [[ $1 = *"list="* ]]; then
+  youtube-dl -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(playlist_title)s/%(playlist_index)s-%(title)s.%(ext)s" --add-metadata $1
+else
+  youtube-dl -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(title)s.%(ext)s" --add-metadata $1
+fi;
