@@ -1,0 +1,4 @@
+#!/bin/sh
+
+kitty htop && i3-msg "[id=$(xdotool getactivewindow)] floating enable"
+

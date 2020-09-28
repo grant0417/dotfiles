@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#DATE=$(date +"%d")
+
+MONTH=$(cal | awk 'NR==1{ print $1 " " $2 }')
+WEEKS=$(cal | awk -v date=$DATE '
+NR==2 { print "<i>" $0 "</i>" }
+NR>2 { print }')
+
+dunstify "$MONTH" "$WEEKS"
