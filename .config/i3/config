@@ -169,7 +169,7 @@ floating_modifier $mod
 exec setxkbmap -option caps:swapescape
 
 # Sets up Picom as the window compositor
-exec picom --config ~/.config/picom/picom.conf -b
+exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
 
 # Disable title bars for i3-gaps
 for_window [class=".*"] border pixel 2
@@ -183,15 +183,32 @@ bindsym $mod+bracketright gaps inner current plus 5
 bindsym $mod+Shift+bracketleft gaps outer current minus 5
 bindsym $mod+Shift+bracketright gaps outer current plus 5
 
+bindsym $mod+Control+bracketleft gaps left current plus 5
+bindsym $mod+Control+bracketright gaps right current plus 5
+
+bindsym $mod+Control+Shift+bracketleft gaps left current minus 5
+bindsym $mod+Control+Shift+bracketright gaps right current minus 5
+
+# Sets initial gaps
+gaps inner 20
+
+# Toggle polybar
+bindsym $mod+grave exec --no-startup-id polybar-msg cmd toggle
+
+# Media keys
+bindsym $mod+F10 exec --no-startup-id xdotool key XF86AudioPrev
+bindsym $mod+F11 exec --no-startup-id xdotool key XF86AudioPlay
+bindsym $mod+F12 exec --no-startup-id xdotool key XF86AudioNext
+
 # Screen shot keys
-bindsym Print exec screen-shot-region 
-bindsym Control+Print exec screen-shot-region desktop
+bindsym Print exec --no-startup-id screen-shot-region 
+bindsym Control+Print exec --no-startup-id screen-shot-region desktop
 
 # Sets wallpaper
-exec feh --bg-center ~/.config/backgrounds/floor.jpg
+exec --no-startup-id feh --bg-center ~/.config/backgrounds/floor.jpg
 
 # Starts Dunst (notification manager)
-exec dunst
+exec --no-startup-id dunst
 
 # Starts Telegram
-exec telegram-desktop -startintray 
+exec --no-startup-id telegram-desktop -startintray 
