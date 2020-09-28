@@ -1,26 +1,29 @@
 [bar/top]
 
+enable-ipc = true
+
 padding-left = 0
 padding-right = 2
 
 module-margin-left = 1
 module-margin-right = 2
 
-
-modules-left = power-menu i3
-modules-center = arch-label date
+modules-left = power-menu i3 rss mpd
+modules-center = updates date 
 modules-right = cpu memory wired-network pulseaudio 
 
 tray-position = right
 tray-maxsize = 32
 
-background = #222
+background = #80000000
 foreground = #fff
 dpi = 160
 height = 50
 
 font-0 = "Hack Nerd Font:size=12;4"
 
+scroll-up = i3-msg workspace next_on_output
+scroll-down = i3-msg workspace prev_on_output
 
 [module/date]
 type = internal/date
@@ -117,7 +120,7 @@ type = custom/menu
 
 label-open = "   ⏻ "
 label-close = "   "
-label-separator = |
+label-separator = " "
 
 menu-0-0 = Shutdown 
 menu-0-0-exec = shutdown now
@@ -127,3 +130,27 @@ menu-0-2 = Logout
 menu-0-2-exec = i3-msg exit
 menu-0-3 = Lock
 menu-0-3-exec = betterlockscreen --lock dimblur   
+
+[module/updates]
+type = custom/script
+exec = ~/.config/polybar/updates.sh
+interval = 3600
+format-prefix = " "
+
+click-left = pkill -USR1 polybar
+
+[module/title]
+type = internal/xwindow
+
+[module/rss]
+type = custom/script
+exec = ~/.config/polybar/newsboat-unread.sh
+internal = 3600
+format-prefix = " "
+
+[module/mpd]
+type = internal/mpd
+
+host = 127.0.0.1
+port = 32433
+password = mysecretpassword
