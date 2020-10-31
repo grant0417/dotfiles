@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if pidof conky ; then
+    killall conky
+else
+    conky -d
+fi
+
+

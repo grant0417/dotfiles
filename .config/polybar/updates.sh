@@ -13,5 +13,5 @@ updates=$(("$updates_arch" + "$updates_aur"))
 if [ "$updates" -gt 0 ]; then
     echo " %{F#f00}$updates${F-}"
 else
-    echo " "
+    echo ""
 fi

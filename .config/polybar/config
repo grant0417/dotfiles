@@ -8,14 +8,14 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-modules-left = power-menu i3 rss mpd
-modules-center = updates date 
-modules-right = cpu memory wired-network pulseaudio 
+modules-left = power-menu i3 rss updates
+modules-center = date
+modules-right = cpu memory wired-network pulseaudio
 
 tray-position = right
 tray-maxsize = 32
 
-background = #80000000
+background = #b0000000
 foreground = #fff
 dpi = 160
 height = 50
@@ -28,7 +28,7 @@ scroll-down = i3-msg workspace prev_on_output
 [module/date]
 type = internal/date
 
-date = "%m/%d%"
+date = "%b %e%"
 time = "%l:%M %p"
 
 date-alt = "%Y/%m/%d"
@@ -60,7 +60,7 @@ type = internal/pulseaudio
 format-volume = <ramp-volume> <label-volume>
 
 label-muted = 婢 muted
-label-muted-foreground = #666
+label-muted-foreground = #bbb
 
 ramp-volume-0 = 奄
 ramp-volume-1 = 奔
@@ -118,26 +118,27 @@ content = 
 [module/power-menu]
 type = custom/menu
 
-label-open = "   ⏻ "
+label-open = "   "
 label-close = "   "
 label-separator = " "
 
-menu-0-0 = Shutdown 
-menu-0-0-exec = shutdown now
-menu-0-1 = Reboot
-menu-0-1-exec = reboot
-menu-0-2 = Logout
-menu-0-2-exec = i3-msg exit
-menu-0-3 = Lock
-menu-0-3-exec = betterlockscreen --lock dimblur   
+menu-0-3 = Shutdown 
+menu-0-3-exec = shutdown now
+menu-0-2 = Reboot
+menu-0-2-exec = reboot
+menu-0-1 = Logout
+menu-0-1-exec = i3-msg exit
+menu-0-0 = Lock
+menu-0-0-exec = betterlockscreen --lock dimblur   
+menu-0-4 = Reload
+menu-0-4-exec = pkill -USR1 polybar && i3-msg restart
 
 [module/updates]
 type = custom/script
 exec = ~/.config/polybar/updates.sh
 interval = 3600
-format-prefix = " "
+format-prefix = "勒 "
 
-click-left = pkill -USR1 polybar
 
 [module/title]
 type = internal/xwindow

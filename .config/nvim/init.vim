@@ -55,6 +55,8 @@ set wildmode=longest,list,full
 set splitbelow splitright
 set completeopt -=preview
 
+set colorcolumn=+1
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -162,13 +164,18 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " Vimtex configs
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
+" let g:Tex_BibtexFlavor='biber'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_MultipleCompileFormats='pdf,dvi'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 autocmd FileType tex setlocal spell! spelllang=en_us
+autocmd FileType tex setlocal textwidth=80
 
 " Markdown configs
 autocmd FileType markdown setlocal spell! spelllang=en_us
+autocmd FileType markdown setlocal textwidth=80
 
 " Rust configs
 let g:rustfmt_autosave = 1

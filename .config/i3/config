@@ -2,7 +2,7 @@
 set $mod Mod4
 
 # Sets font to Hack 9pt
-font pango:Hack 9
+font pango:Hack Nerd Font 9
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -30,7 +30,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 
 # start rofi a replacement for dmenu
-bindsym $mod+d exec "rofi -combi-modi window,drun -theme solarized -font \\"hack 10\\" -show combi -icon-theme \\"Papirus\\" -show-icons -dpi 240 -show combi"
+bindsym $mod+d exec "rofi -combi-modi window,drun -theme arthur -font \\"hack 10\\" -show combi -icon-theme \\"Papirus\\" -show-icons -dpi 240 -show combi"
 
 # change focus
 bindsym $mod+h focus left
@@ -169,7 +169,7 @@ floating_modifier $mod
 exec setxkbmap -option caps:swapescape
 
 # Sets up Picom as the window compositor
-exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
+exec --no-startup-id picom --config ~/.config/picom/picom.conf -b --backend glx
 
 # Disable title bars for i3-gaps
 for_window [class=".*"] border pixel 2
@@ -192,6 +192,9 @@ bindsym $mod+Control+Shift+bracketright gaps right current minus 5
 # Sets initial gaps
 gaps inner 20
 
+for_window [class="Conky"] floating enable
+for_window [class="Conky"] border pixel 0
+
 # Toggle polybar
 bindsym $mod+grave exec --no-startup-id polybar-msg cmd toggle
 
@@ -210,5 +213,8 @@ exec --no-startup-id feh --bg-center ~/.config/backgrounds/floor.jpg
 # Starts Dunst (notification manager)
 exec --no-startup-id dunst
 
-# Starts Telegram
-exec --no-startup-id telegram-desktop -startintray 
+# Auto Start
+exec telegram-desktop -startintray 
+exec jetbrains-toolbox --minimize
+exec birdtray
+exec firefox-developer-edition

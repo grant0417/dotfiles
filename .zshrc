@@ -72,6 +72,13 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/opt/cross/bin:$HOME/.cargo/bin/:$HOME/.gem/ruby/2.7.0/bin:$PATH"
 
+# Android Development
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 export MANPATH="/usr/local/man:$MANPATH"
 
 export LANG=en_US.UTF-8
