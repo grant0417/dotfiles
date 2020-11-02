@@ -62,10 +62,9 @@ ZSH_THEME="agnoster"
 plugins=(
 	git
 	python
-	k
 	pip
-	zsh-syntax-highlighting
 	colored-man-pages
+	zsh-syntax-highlighting
 	)
 
 source $ZSH/oh-my-zsh.sh
@@ -94,6 +93,9 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias newsboat="newsboat --refresh-on-start"
+alias e="exa --git --classify"
+alias ea="exa --all --git --classify"
+alias el="exa --all --git --classify --long"
 
 alias editdots="vim $HOME/Documents/dotfiles/"
 alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
