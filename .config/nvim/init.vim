@@ -3,6 +3,7 @@ call plug#begin()
 	Plug 'junegunn/fzf'
   Plug 'lervag/vimtex'
   Plug 'rust-lang/rust.vim'
+  Plug 'tikhomirov/vim-glsl'
 call plug#end()
 
 filetype indent plugin on

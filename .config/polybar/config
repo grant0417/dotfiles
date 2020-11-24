@@ -10,7 +10,7 @@ module-margin-right = 2
 
 modules-left = power-menu i3 rss updates
 modules-center = date
-modules-right = cpu memory wired-network pulseaudio
+modules-right = cpu memory wired-network pulseaudio battery
 
 tray-position = right
 tray-maxsize = 32
@@ -149,9 +149,31 @@ exec = ~/.config/polybar/newsboat-unread.sh
 internal = 3600
 format-prefix = " "
 
-[module/mpd]
-type = internal/mpd
+[module/battery]
+type=internal/battery
+full-at=99
+battery=BAT0
+adapter=AC
 
-host = 127.0.0.1
-port = 32433
-password = mysecretpassword
+label-charging =  %percentage%%
+
+label-discharging = %percentage%%
+
+format-charging =  <label-charging> %{F#0f0}<ramp-capacity>%{F-} 
+format-discharging = <label-discharging> <ramp-capacity>
+
+ramp-capacity-0 = %{F#f00} %{F-}
+ramp-capacity-1 = %{F#ff0} %{F-}
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+ramp-capacity-4 = " "
+
+ramp-
+
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+
+animation-charging-framerate = 750

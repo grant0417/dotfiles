@@ -9,7 +9,7 @@ font pango:Hack Nerd Font 9
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen --lock dimblur
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -20,11 +20,15 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
+# Use xbacklight to adjust brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -208,13 +212,16 @@ bindsym Print exec --no-startup-id screen-shot-region
 bindsym Control+Print exec --no-startup-id screen-shot-region desktop
 
 # Sets wallpaper
-exec --no-startup-id feh --bg-center ~/.config/backgrounds/floor.jpg
+exec --no-startup-id feh --no-fehbg --bg-center ~/.config/backgrounds/floor.jpg
 
 # Starts Dunst (notification manager)
 exec --no-startup-id dunst
 
 # Auto Start
-exec telegram-desktop -startintray 
-exec jetbrains-toolbox --minimize
-exec birdtray
-exec firefox-developer-edition
+exec --no-startup-id telegram-desktop -startintray 
+exec --no-startup-id jetbrains-toolbox --minimize
+exec --no-startup-id birdtray
+exec --no-startup-id nm-applet
+exec --no-startup-id firefox-developer-edition
+exec --no-startup-id blueman-tray
+exec --no-startup-id optimus-manager-qt
