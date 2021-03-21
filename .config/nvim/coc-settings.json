@@ -5,10 +5,16 @@
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
       "rootPatterns": [".ccls-root", "compile_commands.json"],
       "initializationOptions": {
-         "cache": {
-           "directory": ".ccls-cache"
-         }
-       }
+        "cache": {
+          "directory": ".ccls-cache"
+        }
+      }
+    },     
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "filetypes": ["haskell", "lhaskell"]
     }
   }
 }

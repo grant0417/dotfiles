@@ -34,8 +34,7 @@ time = "%l:%M %p"
 date-alt = "%Y/%m/%d"
 time-alt = "%I:%M:%S %p"
 
-label = %{A2:notify-calendar:} %time%  %date% %{A}
-
+label = %{A3:notify-calendar:} %time%  %date% %{A}
 
 [module/i3]
 type = internal/i3
@@ -66,11 +65,15 @@ ramp-volume-0 = 奄
 ramp-volume-1 = 奔
 ramp-volume-2 = 墳
 
+click-right = pavucontrol
+click-middle = pavucontrol
+
 [module/memory]
 type = internal/memory
 
 label =  %percentage_used%%
 
+click-left = xfce4-taskmanager
 
 [module/cpu]
 type = internal/cpu
@@ -88,6 +91,8 @@ ramp-coreload-4 = ▅
 ramp-coreload-5 = ▆
 ramp-coreload-6 = ▇
 ramp-coreload-7 = █
+
+click-left = xfce4-taskmanager
 
 [module/wired-network]
 type = internal/network
@@ -167,8 +172,6 @@ ramp-capacity-1 = %{F#ff0} %{F-}
 ramp-capacity-2 = " "
 ramp-capacity-3 = " "
 ramp-capacity-4 = " "
-
-ramp-
 
 animation-charging-0 = " "
 animation-charging-1 = " "

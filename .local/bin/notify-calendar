@@ -7,4 +7,6 @@ WEEKS=$(cal | awk -v date=$DATE '
 NR==2 { print "<i>" $0 "</i>" }
 NR>2 { print }')
 
+echo $WEEKS
+
 dunstify "$MONTH" "$WEEKS"

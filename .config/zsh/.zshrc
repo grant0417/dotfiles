@@ -76,16 +76,29 @@ export BROWSER='firefox-developer-edition'
 
 export ARCHFLAGS="-arch x86_64"
 
+# SSH fix
+alias ssh='TERM=xterm-256color \ssh'
+
+# Kitty terminal shortcuts
 alias icat="kitty +kitten icat"
 alias kdiff="kitty +kitten diff"
+
+# Neovim shortcuts
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
+alias nvimdiff="nvim -d"
+alias vimdiff="nvim -d"
+
+# Newsboat shortcut
 alias newsboat="newsboat --refresh-on-start"
+
+# Exa shortcuts
 alias e="exa --git --classify"
 alias ea="exa --all --git --classify"
 alias el="exa --all --git --classify --long"
 
+# Dotfile management shortcuts
 alias editdots="vim $HOME/Documents/dotfiles/"
 alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
 

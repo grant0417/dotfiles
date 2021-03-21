@@ -3,6 +3,7 @@ base-devel
 biber
 blender
 calibre
+ccls
 clang
 conky
 exa
@@ -21,6 +22,7 @@ neovim
 newsboat
 openssh
 pandoc
+pavucontrol
 picom
 python
 ranger
