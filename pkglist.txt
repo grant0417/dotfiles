@@ -10,6 +10,7 @@ exa
 feh
 firefox-developer-edition
 flameshot
+go
 gcc
 gimp
 git
@@ -20,10 +21,15 @@ kitty
 mpv
 neovim
 newsboat
+nodejs
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
 openssh
 pandoc
 pavucontrol
 picom
+pulseaudio
 python
 ranger
 rofi
@@ -39,3 +45,4 @@ zsh
 zsh-autosuggestions
 zsh-completions
 zsh-syntax-highlighting
+xclip

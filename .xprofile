@@ -3,5 +3,7 @@
 xrandr | grep -q DP-0 && xrandr --output DP-0 --auto --primary
 xrandr | grep -q DP-0 && xrandr --output DVI-D-0 --auto --left-of DP-0 --rotate left
 
+QT_QPA_PLATFORMTHEME=qt5ct
+
 [[ -f ~/.config/zsh/.zshenv ]] && source ~/.config/zsh/.zshenv
 

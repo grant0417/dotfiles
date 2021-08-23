@@ -18,7 +18,7 @@ fi
 cd "$INSTALL_DIR"
 
 # Install AUR packages
-yay -Sa --noconfirm --needed --needed - < aurlist.txt
+yay -Sa --noconfirm --needed - < aurlist.txt
 
 # Deploy configs
 ./deploy.sh
