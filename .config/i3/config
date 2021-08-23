@@ -13,11 +13,11 @@ exec --no-startup-id xidlehook \
   --timer 900 \
     'xbacklight -set 10 -time 300 -fps 60' \
     'xbacklight -set 100' \
-  --timer 150 \
+  --timer 180 \
     'xbacklight -set 100; betterlockscreen --lock dimblur' \
     '' \
-  --timer 60 \
-    'systemctl suspend-then-hibernate' \
+  --timer 120 \
+    'systemctl suspend' \
     ''
 
 # Allows screen to be locked

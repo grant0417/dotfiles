@@ -8,7 +8,7 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-modules-left = power-menu i3 rss updates
+modules-left = power-menu i3 updates
 modules-center = date
 modules-right = cpu memory wired-network pulseaudio battery
 

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+GIT_BASEDIR=$(git rev-parse --show-toplevel)
+
+GIT_NAME=$(basename "$GIT_BASEDIR")
+GIT_PARENT=$(dirname "$GIT_BASEDIR")
+
+git archive --format=zip HEAD > "$GIT_PARENT"/"$GIT_NAME".zip
