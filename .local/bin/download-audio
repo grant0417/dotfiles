@@ -1,9 +1,9 @@
 #!/bin/sh
 
-FILE_FORMAT="aac"
+FILE_FORMAT="opus"
 
 if [[ $1 = *"list="* ]]; then
-  youtube-dl -ic --yes-playlist -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(playlist_title)s/%(playlist_index)s-%(title)s.%(ext)s" --add-metadata --socket-timeout 5 $1
+  youtube-dl -ic --yes-playlist -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s" --add-metadata --socket-timeout 5 $1
 else
   youtube-dl -i -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(title)s.%(ext)s" --add-metadata --socket-timeout 5 $1
 fi;
