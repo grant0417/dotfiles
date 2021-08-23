@@ -6,3 +6,4 @@ nerd-fonts-hack
 oh-my-zsh-git
 polybar
 yay
+zsh-fast-syntax-highlighting-git

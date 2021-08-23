@@ -9,6 +9,7 @@ conky
 exa
 feh
 firefox-developer-edition
+fzf
 flameshot
 go
 gcc
@@ -38,6 +39,8 @@ sshfs
 telegram-desktop
 texlive-lang
 texlive-most
+xorg
+xorg-xinit
 zathura
 zathura-djvu
 zathura-pdf-mupdf
