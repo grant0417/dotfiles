@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FILE_FORMAT="opus"
+FILE_FORMAT="flac"
 
 if [[ $1 = *"list="* ]]; then
   youtube-dl -ic --yes-playlist -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s" --add-metadata --socket-timeout 5 $1

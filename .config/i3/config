@@ -110,7 +110,20 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10"
+
+set $left-monitor "DP-4"
+set $center-monitor "DP-0"
+set $right-monitor "DP-2"
+
+workspace $ws1 output $left-monitor
+workspace $ws2 output $left-monitor
+workspace $ws3 output $left-monitor
+workspace $ws4 output $center-monitor
+workspace $ws5 output $center-monitor
+workspace $ws6 output $center-monitor
+workspace $ws7 output $right-monitor
+workspace $ws8 output $right-monitor
+workspace $ws9 output $right-monitor
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -122,7 +135,6 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -134,7 +146,6 @@ bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
 
 # rotate container between windows
 bindsym $mod+o move container to output left
@@ -184,14 +195,14 @@ bindsym $mod+button3 kill
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
  
-# Swap Caps and Escape
-exec setxkbmap -option caps:swapescape
+# Set caps to escape
+exec --no-startup-id setxkbmap -option caps:escape
 
 # Sets up Picom as the window compositor
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b --backend glx
 
 # Disable title bars for i3-gaps
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 1
 
 smart_borders on
 
@@ -216,6 +227,17 @@ for_window [class="Conky"] border pixel 0
 
 for_window [instance="pavucontrol" class="Pavucontrol"] floating enable 
 for_window [instance="xfce4-taskmanager" class="Xfce4-taskmanager"] floating enable
+for_window [instance="nm-connection-editor" class="Nm-connection-editor"] floating enable
+for_window [instance="blueman-manager" class="Blueman-manager"] floating enable
+
+for_window [instance="floating" class="Alacritty"] floating enable
+for_window [instance="floating" class="Alacritty"] resize set 80 ppt 80 ppt
+for_window [instance="floating" class="Alacritty"] move position center
+
+for_window [instance="game" class="game"] floating enable
+
+# Fix for Origin Games
+for_window [instance="steam_app_1182480" class="steam_app_1182480"] floating enable
 
 # Toggle polybar
 bindsym $mod+grave exec --no-startup-id polybar-msg cmd toggle
@@ -236,10 +258,11 @@ exec --no-startup-id feh --no-fehbg --bg-center ~/.config/backgrounds/floor.jpg
 exec --no-startup-id dunst
 
 # Auto Start
-exec --no-startup-id telegram-desktop -startintray 
-exec --no-startup-id jetbrains-toolbox --minimize
-exec --no-startup-id birdtray
+#exec --no-startup-id telegram-desktop -startintray 
+#exec --no-startup-id jetbrains-toolbox --minimize
+#exec --no-startup-id birdtray
 exec --no-startup-id nm-applet
-exec --no-startup-id firefox-developer-edition
 exec --no-startup-id blueman-tray
-exec --no-startup-id optimus-manager-qt
+#exec --no-startup-id optimus-manager-qt
+
+exec --no-startup-id $BROWSER

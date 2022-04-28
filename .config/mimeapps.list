@@ -19,10 +19,14 @@ image/png=img.desktop;
 image/jpeg=img.desktop;
 image/gif=img.desktop;
 
-application/rss+xml=rss.desktop
+application/rss+xml=rss.desktop;
 
-video/x-matroska=video.desktop
+video/x-matroska=video.desktop;
 
-x-scheme-handler/lbry=lbry.desktop
+x-scheme-handler/lbry=lbry.desktop;
 
-inode/directory=file.desktop
+inode/directory=file.desktop;
+
+x-scheme-handler/http=browser.desktop;
+x-scheme-handler/https=browser.desktop;
+

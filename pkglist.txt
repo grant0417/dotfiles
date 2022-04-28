@@ -20,3 +20,4 @@ zathura
 zathura-djvu
 zathura-pdf-mupdf
 zsh
+
