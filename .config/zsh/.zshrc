@@ -1,9 +1,6 @@
-export ZSH="/usr/share/oh-my-zsh/"
+. "$HOME/.fig/shell/zshrc.pre.zsh"
 
-# oh my zsh config
-ZSH_THEME="agnoster"
-HYPHEN_INSENSITIVE="true"
-
+# Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 setopt autocd		# Automatically cd into typed directory.
 setopt interactive_comments
@@ -11,7 +8,7 @@ setopt interactive_comments
 # History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
-HISTFILE=~/.cache/zsh/history
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -24,17 +21,19 @@ _comp_options+=(globdots)		# Include hidden files.
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 plugins=(
   docker
-	git
+  git
   gitignore
-	pip
+  pip
   sudo
-	colored-man-pages
-  fzf-tab
-	)
+  colored-man-pages
+)
 
-source $ZSH/oh-my-zsh.sh
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$CARGO_HOME/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
+export PATH="$PATH:$CARGO_HOME/bin"
+
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export ARCHFLAGS="-arch x86_64"
@@ -81,9 +80,6 @@ alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
 # yarn
 alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"' 
 
-# Completion for kitty
-# kitty + complete setup zsh | source /dev/stdin
-
 prompt_context() {
   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
     prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
@@ -94,6 +90,49 @@ prompt_context() {
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
-# Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+# kill|ps compleations
+zstyle ':completion:*:*:*:*:processes' \
+    command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' \
+    'fzf-preview [[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' \
+    fzf-flags --preview-window=down:3:wrap
+
+# systemctl compleations
+zstyle ':fzf-tab:complete:systemctl-*:*' \
+    fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+
+# env compleations
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
+	fzf-preview 'echo ${(P)word}'
+
+# git compleations
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' \
+    fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-log:*' \
+    fzf-preview 'git log --color=always $word'
+zstyle ':fzf-tab:complete:git-help:*' \
+    fzf-preview 'git help $word | bat -plman --color=always'
+zstyle ':fzf-tab:complete:git-show:*' \
+    fzf-preview \
+	'case "$group" in
+	    "commit tag") git show --color=always $word ;;
+	    *) git show --color=always $word | delta ;;
+	esac'
+zstyle ':fzf-tab:complete:git-checkout:*' \
+    fzf-preview \
+	'case "$group" in
+	    "modified file") git diff $word | delta ;;
+	    "recent commit object name") git show --color=always $word | delta ;;
+	    *) git log --color=always $word ;;
+	esac'
+
+# man compleations
+zstyle ':fzf-tab:complete:(\\|)run-help:*' \
+    fzf-preview 'run-help $word'
+zstyle ':fzf-tab:complete:(\\|*/|)man:*' \
+    fzf-preview 'man $word'
+
+
+. "$HOME/.fig/shell/zshrc.post.zsh"
 

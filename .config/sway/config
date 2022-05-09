@@ -18,6 +18,11 @@ set $menu "wofi --show drun -I -G -m"
 # Wallpaper
 output * bg $HOME/.config/backgrounds/floor.png fill
 
+output eDP-1 scale 1.5
+
+xwayland force scale 2
+exec xsettingsd
+
 
 # Example configuration:
 #
@@ -42,6 +47,11 @@ output * bg $HOME/.config/backgrounds/floor.png fill
 input type:touchpad {
     tap enabled
     natural_scroll enabled
+    click_method clickfinger
+}
+
+input type:keyboard {
+    xkb_options caps:escape
 }
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
@@ -185,22 +195,28 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+
+bindsym --release Print         exec grim-region
+bindsym --release Shift+Print   exec grim-screen
+bindsym --release Control+Print exec grim-window
+
+default_border pixel
+default_floating_border pixel
+
+# Polkit
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Status Bar
 bar {
     position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    swaybar_command waybar
 }
 
 include /etc/sway/config.d/*
+

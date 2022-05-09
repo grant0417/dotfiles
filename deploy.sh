@@ -1,4 +1,13 @@
 #!/bin/sh
 
-DEPLOY_DIR=$(dirname $0)/
-rsync --exclude ".git/" --exclude "deploy.sh"  --exclude "screenshots" --exclude "README.md" --exclude "pkglist.txt" --exclude "aurlist.txt" --exclude "install_deploy.sh" --exclude "setup_system.sh" -avhE --no-perms $DEPLOY_DIR $HOME
+REPO_DIR="$(dirname "$0")"
+FILES="$(cd $REPO_DIR && find .local .config .zshenv -type f)"
+
+for file in ${FILES}
+do
+  echo "Deploying: '$file'"
+  mkdir -p "$(dirname "$HOME/$file")"
+  rm -f "$HOME/$file"
+  ln "$REPO_DIR/$file" "$HOME/$file"
+done
+

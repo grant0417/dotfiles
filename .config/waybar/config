@@ -1,0 +1,50 @@
+{
+    "layer": "top",
+    "height": 24,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["cpu", "pulseaudio", "battery", "clock", "tray"],
+    "sway/window": {
+        "format": "{}",
+        "max-length": 70,
+        "rewrite": {
+            "(.*?)( — )?Firefox Developer Edition": "  $1",
+            "(.*) - NVIM": " $1",
+            "(.*) - Discord": " $1"
+        }
+    },
+    "cpu": {
+        "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+        "interval": 1
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "headset": "",
+            "hands-free": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "on-right-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    "battery": {
+        "states": {
+            "full": 98,
+        },
+        "format-full": "",
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format-alt": "{:%a, %d. %b  %H:%M}"
+    }
+}
+

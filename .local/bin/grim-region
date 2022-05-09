@@ -1,0 +1,3 @@
+#!/bin/dash
+grim -g "$(slurp)" - | wl-copy
+
