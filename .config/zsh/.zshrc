@@ -1,5 +1,5 @@
+# Fig pre block. Keep at the top of this file.
 . "$HOME/.fig/shell/zshrc.pre.zsh"
-
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 setopt autocd		# Automatically cd into typed directory.
@@ -133,6 +133,8 @@ zstyle ':fzf-tab:complete:(\\|)run-help:*' \
 zstyle ':fzf-tab:complete:(\\|*/|)man:*' \
     fzf-preview 'man $word'
 
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
 
+# Fig post block. Keep at the bottom of this file.
 . "$HOME/.fig/shell/zshrc.post.zsh"
-

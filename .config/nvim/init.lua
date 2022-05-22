@@ -65,13 +65,13 @@ require('packer').startup({function()
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
           ['<Tab>'] = cmp.mapping(
             function(fallback)
-              local copilot_keys = vim.fn['copilot#Accept']()
+              -- local copilot_keys = vim.fn['copilot#Accept']()
               if cmp.visible() then
                 cmp.select_next_item()
                 --elseif luasnip.expand_or_jumpable() then
                 --luasnip.expand_or_jump()
-              elseif copilot_keys ~= '' and type(copilot_keys) == 'string' then
-                vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+              -- elseif copilot_keys ~= '' and type(copilot_keys) == 'string' then
+              --  vim.api.nvim_feedkeys(copilot_keys, 'i', true)
               else
                 fallback()
               end
@@ -211,14 +211,14 @@ require('packer').startup({function()
     end
   }
 
-  use {
-    'github/copilot.vim',
-    config = function()
-      --vim.g.copilot_no_tab_map = true
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_tab_fallback = ""
-    end
-  }
+  -- use {
+  --   'github/copilot.vim',
+  --   config = function()
+  --     --vim.g.copilot_no_tab_map = true
+  --     vim.g.copilot_assume_mapped = true
+  --     vim.g.copilot_tab_fallback = ""
+  --   end
+  -- }
 
   if packer_bootstrap then
     require('packer').sync()

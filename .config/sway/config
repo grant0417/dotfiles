@@ -197,20 +197,25 @@ bindsym $mod+r mode "resize"
 
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
+
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
-bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
-bindsym --release Print         exec grim-region
-bindsym --release Shift+Print   exec grim-screen
-bindsym --release Control+Print exec grim-window
+bindsym XF86AudioMute        exec "pactl set-sink-mute   @DEFAULT_SINK@ toggle"
+bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +1%"
+bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -1%"
+
+bindsym Print         exec grim-region
+bindsym Shift+Print   exec grim-screen
+bindsym Control+Print exec grim-window
 
 default_border pixel
 default_floating_border pixel
 
 # Polkit
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec dunst
 
 # Status Bar
 bar {

@@ -1,0 +1,137 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[aws]
+disabled = true
+
+[buf]
+format = "[$symbol]($style)"
+symbol = " "
+
+[c]
+symbol = " "
+
+[cmake]
+format = "[$symbol]($style)"
+
+[cmd_duration]
+format = "[$duration]($style) "
+
+[cobol]
+format = "[$symbol]($style)"
+
+[conda]
+symbol = " "
+
+[crystal]
+format = "[$symbol]($style)"
+
+[dart]
+format = "[$symbol]($style)"
+symbol = " "
+
+[deno]
+format = "[$symbol]($style)"
+
+[docker_context]
+symbol = " "
+
+[dotnet]
+format = "[$symbol(🎯 $tfm )]($style)"
+
+[elixir]
+format = '[$symbol]($style)'
+symbol = " "
+
+[elm]
+format = '[$symbol]($style)'
+symbol = " "
+
+[erlang]
+format = '[$symbol]($style)'
+
+[git_branch]
+symbol = " "
+
+[golang]
+format = '[$symbol]($style)'
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[helm]
+format = '[$symbol]($style)'
+
+[java]
+symbol = " "
+
+[julia]
+format = '[$symbol]($style)'
+symbol = " "
+
+[kotlin]
+format = '[$symbol]($style)'
+
+[lua]
+format = '[$symbol]($style)'
+
+[memory_usage]
+symbol = " "
+
+[nim]
+format = '[$symbol]($style)'
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+format = '[$symbol]($style)'
+symbol = " "
+
+[ocaml]
+format = '[$symbol(\($switch_indicator$switch_name\) )]($style)'
+
+[package]
+symbol = " "
+
+[perl]
+format = '[$symbol]($style)'
+
+[php]
+format = '[$symbol]($style)'
+
+[pulumi]
+format = '[$symbol$stack]($style)'
+
+[purescript]
+format = '[$symbol]($style)'
+
+[python]
+format = '[$symbol]($style)'
+symbol = " "
+
+[red]
+format = '[$symbol]($style)'
+
+[rlang]
+format = '[$symbol]($style)'
+
+[ruby]
+format = '[$symbol]($style)'
+
+[rust]
+format = '[$symbol]($style)'
+
+[swift]
+format = '[$symbol]($style)'
+
+[vagrant]
+format = '[$symbol]($style)'
+
+[vlang]
+format = '[$symbol]($style)'
+
+[zig]
+format = '[$symbol]($style)'
+
