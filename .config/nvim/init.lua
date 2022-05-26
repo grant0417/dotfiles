@@ -1,7 +1,7 @@
 -- Bootstrap packer
 local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  packer_bootstrap = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  PACKER_BOOTSTRAP = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 -- Autoreload nvim on save
@@ -11,6 +11,20 @@ vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | Packer
 require('packer').startup({function()
   -- Package manager
   use 'wbthomason/packer.nvim'
+  
+  use { 'bluz71/vim-moonfly-colors',
+    config = function()
+      vim.opt.termguicolors = true
+
+      vim.g.moonflyCursorColor = 1
+      vim.g.moonflyTransparent = 1
+      vim.g.moonflyUnderlineMatchParen = 1
+      vim.g.moonflyWinSeparator = 2
+      vim.opt.fillchars = { horiz = '━', horizup = '┻', horizdown = '┳', vert = '┃', vertleft = '┫', vertright = '┣', verthoriz = '╋', }
+
+      vim.cmd [[colorscheme moonfly]]
+    end
+  }
 
   use 'preservim/nerdtree'
 
@@ -147,7 +161,7 @@ require('packer').startup({function()
       require('lualine').setup({
         options = {
           icons_enabled = true,
-          theme = 'auto',
+          theme = 'moonfly',
           component_separators = { left = '', right = ''},
           section_separators = { left = '', right = ''},
           disabled_filetypes = {},
@@ -220,7 +234,7 @@ require('packer').startup({function()
   --   end
   -- }
 
-  if packer_bootstrap then
+  if PACKER_BOOTSTRAP then
     require('packer').sync()
   end
 end,
@@ -324,3 +338,35 @@ for _, lsp in pairs(servers) do
   }
 end
 
+-- Example custom server
+-- Make runtime files discoverable to the server
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+
+require('lspconfig').sumneko_lua.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file('', true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}

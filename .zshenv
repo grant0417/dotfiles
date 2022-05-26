@@ -45,4 +45,5 @@ export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 
 export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
 export MOZ_X11_EGL=1
+export MOZ_ENABLE_WAYLAND=1
 
