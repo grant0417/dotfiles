@@ -1,0 +1,36 @@
+[colors]
+foreground = '#b2b2b2'
+background = '#080808'
+cursor_bg = '#9e9e9e'
+cursor_fg = '#080808'
+cursor_border = '#9e9e9e'
+selection_fg = '#080808'
+selection_bg = '#b2ceee'
+scrollbar_thumb = '#323437'
+ansi = [
+  '#323437',
+  '#ff5454',
+  '#8cc85f',
+  '#e3c78a',
+  '#80a0ff',
+  '#d183e8',
+  '#79dac8',
+  '#c6c6c6',
+]
+brights = [
+  '#949494',
+  '#ff5189',
+  '#36c692',
+  '#c2c292',
+  '#74b2ff',
+  '#ae81ff',
+  '#85dc85',
+  '#e4e4e4',
+]
+
+[colors.indexed]
+
+[metadata]
+name = 'moonfly'
+origin_url = 'https://github.com/bluz71/vim-moonfly-colors'
+

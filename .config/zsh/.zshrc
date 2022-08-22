@@ -29,7 +29,7 @@ plugins=(
 )
 
 # Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
+# kitty + complete setup zsh | source /dev/stdin
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
 export PATH="$PATH:$CARGO_HOME/bin"
@@ -75,6 +75,7 @@ alias drma='docker rm $(  docker ps -a | fzf | awk '"'"'{print $1;}'"'"'  )'
 # pacman
 alias paci="pacman -Slq | fzf --multi --preview 'cat <(pacman -Si {1}) <(pacman -Fl {1} | awk \"{print \$2}\")' | xargs -ro sudo pacman -S"
 alias pacrm="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
+alias paclean='pacman -Qtdq | sudo pacman -Rns -'
 
 # Dotfile management shortcuts
 alias editdots="vim $HOME/Documents/dotfiles/"

@@ -1,5 +1,18 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# format = """[░▒▓█](bright-cyan)$fill
+# ╰ $character"""
+# right_format = """$all╯"""
+# command_timeout = 250
+# add_newline = false
+
+# [fill]
+# symbol = " "
+# style = "bright-cyan"
+
+# [line_break]
+# disabled = true
+
 [aws]
 disabled = true
 
@@ -36,7 +49,7 @@ format = "[$symbol]($style)"
 symbol = " "
 
 [dotnet]
-format = "[$symbol(🎯 $tfm )]($style)"
+format = "[$symbol( $tfm )]($style)"
 
 [elixir]
 format = '[$symbol]($style)'
@@ -74,6 +87,7 @@ format = '[$symbol]($style)'
 
 [lua]
 format = '[$symbol]($style)'
+symbol = " "
 
 [memory_usage]
 symbol = " "
@@ -100,6 +114,7 @@ format = '[$symbol]($style)'
 
 [php]
 format = '[$symbol]($style)'
+symbol = " "
 
 [pulumi]
 format = '[$symbol$stack]($style)'
@@ -119,12 +134,14 @@ format = '[$symbol]($style)'
 
 [ruby]
 format = '[$symbol]($style)'
+symbol = " "
 
 [rust]
 format = '[$symbol]($style)'
 
 [swift]
 format = '[$symbol]($style)'
+symbol = " "
 
 [vagrant]
 format = '[$symbol]($style)'

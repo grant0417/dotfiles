@@ -41,7 +41,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec wezterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -194,7 +194,7 @@ bindsym $mod+button3 kill
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
- 
+
 # Set caps to escape
 exec --no-startup-id setxkbmap -option caps:escape
 
@@ -234,6 +234,9 @@ for_window [instance="floating" class="Alacritty"] floating enable
 for_window [instance="floating" class="Alacritty"] resize set 80 ppt 80 ppt
 for_window [instance="floating" class="Alacritty"] move position center
 
+no_focus [window_role="autocomplete"]
+for_window [window_role="autocomplete"] border pixel 0
+
 for_window [instance="game" class="game"] floating enable
 
 # Fix for Origin Games
@@ -266,8 +269,4 @@ exec --no-startup-id blueman-tray
 #exec --no-startup-id optimus-manager-qt
 
 exec --no-startup-id $BROWSER
-
-no_focus [window_role="autocomplete"]
-for_window [window_role="autocomplete"] border pixel 0
-
 

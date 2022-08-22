@@ -35,13 +35,15 @@ require('packer').startup({function()
     end
   }
 
+  use 'nvim-lua/plenary.nvim'
+  use 'mfussenegger/nvim-dap'
+
   -- LSP
   use 'neovim/nvim-lspconfig'
 
   use {
     'nvim-telescope/telescope.nvim',
     { 
-      'nvim-lua/plenary.nvim', 
       'nvim-telescope/telescope-ui-select.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     },
@@ -191,22 +193,7 @@ require('packer').startup({function()
   }
 
   -- Rust additional
-  use {
-    'simrat39/rust-tools.nvim',
-    config = function()
-      require('rust-tools').setup({
-        tools = {
-          autoSetHints = true,
-          hover_with_actions = true,
-          inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-          },
-        },
-      })
-    end
-  }
+  use 'simrat39/rust-tools.nvim'
 
   -- Git Sign on side
   use { 'lewis6991/gitsigns.nvim', -- git added/removed in sidebar + inline blame
@@ -279,6 +266,8 @@ vim.opt.undofile = true
 
 vim.opt.completeopt = 'menuone,noinsert,noselect'
 
+vim.opt.laststatus = 3
+
 -- Mappings
 local opts = { noremap=true, silent=true }
 
@@ -304,43 +293,55 @@ vim.keymap.set('n', '<leader>so', function()
   require('telescope.builtin').tags { only_current_buffer = true }
 end)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
- 
-local on_attach = function(_, bufnr)
-  local opts = { buffer = bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wl', function()
-    vim.inspect(vim.lsp.buf.list_workspace_folders())
-  end, opts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<leader>.', vim.lsp.buf.code_action, opts)
-  vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 
-  vim.opt.updatetime = 300
-  vim.api.nvim_create_autocmd({"CursorHold"}, {
-    callback = function() vim.diagnostic.open_float(nil, { focusable = false }) end
-  })
-end
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- vim.keymap.set("v", "<C-space>", rt.hover_range.hover_range, { buffer = bufnr })
+      vim.keymap.set("n", "<C-.>", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
+ 
+-- local on_attach = function(_, bufnr)
+--   local opts = { buffer = bufnr }
+--   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+--   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+--   vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+--   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+--   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+--   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+--   vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+--   vim.keymap.set('n', '<leader>wl', function()
+--     vim.inspect(vim.lsp.buf.list_workspace_folders())
+--   end, opts)
+--   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+--   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+--   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+--   vim.keymap.set('n', '<leader>.', vim.lsp.buf.code_action, opts)
+--   vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
+--   vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+-- 
+--   vim.opt.updatetime = 300
+--   vim.api.nvim_create_autocmd({"CursorHold"}, {
+--     callback = function() vim.diagnostic.open_float(nil, { focusable = false }) end
+--   })
+-- end
 
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local servers = { 'rust_analyzer', 'tsserver' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
+-- local servers = { 'tsserver' }
+-- for _, lsp in pairs(servers) do
+--   require('lspconfig')[lsp].setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--   }
+-- end
 
 -- Example custom server
 -- Make runtime files discoverable to the server

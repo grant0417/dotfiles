@@ -11,9 +11,9 @@ application/x-bittorrent=torrent.desktop;
 
 x-scheme-handler/mailto=mail.desktop;
 
-application/postscript=pdf.desktop;
-application/pdf=pdf.desktop;
-application/epub+zip=pdf.desktop;
+application/postscript=zathura.desktop;
+application/pdf=zathura.desktop;
+application/epub+zip=zathura.desktop;
 
 image/png=img.desktop;
 image/jpeg=img.desktop;
@@ -27,8 +27,9 @@ x-scheme-handler/lbry=lbry.desktop;
 
 inode/directory=file.desktop;
 
-x-scheme-handler/http=browser.desktop;
-x-scheme-handler/https=browser.desktop;
+x-scheme-handler/http=firefox-developer-edition.desktop
+x-scheme-handler/https=firefox-developer-edition.desktop
+text/html=firefox-developer-edition.desktop
 
 text/html=browser.desktop;
 
