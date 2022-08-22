@@ -266,3 +266,8 @@ exec --no-startup-id blueman-tray
 #exec --no-startup-id optimus-manager-qt
 
 exec --no-startup-id $BROWSER
+
+no_focus [window_role="autocomplete"]
+for_window [window_role="autocomplete"] border pixel 0
+
+

@@ -56,12 +56,15 @@ alias vimdiff="nvim -d"
 alias newsboat="newsboat --refresh-on-start"
 
 # Exa shortcuts
-alias e="exa --git --classify"
-alias ea="exa --all --git --classify"
-alias el="exa --all --git --classify --long"
+alias ls='exa'
+alias la='exa -a'
+alias ll='exa -al'
+alias e='ls --git --classify'
+alias ea='la --git --classify'
+alias el='ll --git --classify'
 
 # rsync cp
-alias cpv="rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress"
+alias cpv='rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress'
 
 # Docker
 alias dsh='docker exec -it $(  docker ps | fzf | awk '"'"'{print $1;}'"'"'  ) sh'
@@ -76,6 +79,8 @@ alias pacrm="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sud
 # Dotfile management shortcuts
 alias editdots="vim $HOME/Documents/dotfiles/"
 alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
+
+alias cross='sudo env "PATH=$PATH" "RUSTUP_HOME=$(echo ~/.rustup)" cross'
 
 # yarn
 alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"' 

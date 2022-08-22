@@ -30,3 +30,5 @@ inode/directory=file.desktop;
 x-scheme-handler/http=browser.desktop;
 x-scheme-handler/https=browser.desktop;
 
+text/html=browser.desktop;
+

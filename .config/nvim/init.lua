@@ -249,6 +249,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.opt.ignorecase = true
+vim.opt.smartcase  = true
+
 -- Folding
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr   = 'nvim_treesitter#foldexpr()'
@@ -270,6 +273,7 @@ vim.opt.smarttab    = true
 vim.opt.title = true
 vim.opt.mouse = 'a'
 vim.opt.clipboard = 'unnamedplus'
+vim.opt.laststatus = 3
 
 vim.opt.undofile = true
 

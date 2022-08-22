@@ -39,7 +39,6 @@
         "states": {
             "full": 98,
         },
-        "format-full": "",
         "format": "{capacity}% {icon}",
         "format-icons": ["", "", "", "", ""]
     },
