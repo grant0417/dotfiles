@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 setopt autocd		# Automatically cd into typed directory.
@@ -28,11 +28,21 @@ plugins=(
   colored-man-pages
 )
 
-# Completion for kitty
-# kitty + complete setup zsh | source /dev/stdin
-
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
-export PATH="$PATH:$CARGO_HOME/bin"
+export PATH="$CARGO_HOME/bin:$PATH"
+
+if [[ -d "$HOME/.cabal/bin" ]]; then
+    export PATH="$HOME/.cabal/bin:$PATH"
+fi
+
+if [[ -d "$HOME/.ghcup/bin" ]]; then
+    export PATH="$HOME/.ghcup/bin:$PATH"
+fi
+
+# if on macOS, add homebrew to path
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH="$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+fi
 
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
@@ -83,8 +93,9 @@ alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
 
 alias cross='sudo env "PATH=$PATH" "RUSTUP_HOME=$(echo ~/.rustup)" cross'
 
-# yarn
-alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"' 
+# Vscode
+alias c='code'
+alias ci='code-insiders'
 
 prompt_context() {
   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
@@ -93,8 +104,8 @@ prompt_context() {
 }
 
 # fzf 
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 
 # kill|ps compleations
 zstyle ':completion:*:*:*:*:processes' \
@@ -139,8 +150,22 @@ zstyle ':fzf-tab:complete:(\\|)run-help:*' \
 zstyle ':fzf-tab:complete:(\\|*/|)man:*' \
     fzf-preview 'man $word'
 
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# GITSTATUS_LOG_LEVEL=DEBUG
+# source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
+
+timeshell() {
+shell=${1-$SHELL}
+  echo "Timing $shell"
+  unset FIG_TERM
+  unset FIG_HOSTNAME
+  unset FIGTERM_SESSION_ID
+  unset FIG_LOG_LEVEL
+  for i in $(seq 1 10); do /usr/bin/time $shell -li -c exit; 
+  done
+}
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
