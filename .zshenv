@@ -1,3 +1,5 @@
+export LANG=en_US.UTF-8
+
 export EDITOR="nvim"
 export TERMINAL="kitty"
 export BROWSER="firefox-developer-edition"
@@ -26,7 +28,7 @@ export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 export PSQLRC="${XDG_CONFIG_HOME:-$HOME/.config}/pg/psqlrc"
 export PSQL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/pg/psql_history"
 export PGPASSFILE="${XDG_CONFIG_HOME:-$HOME/.config}/pg/pgpass"
-export PGSERVICEFILE="${XDG_CONFIG_HOME:-$HOME/.config}/pg/pg_service.conf" 
+export PGSERVICEFILE="${XDG_CONFIG_HOME:-$HOME/.config}/pg/pg_service.conf"
 
 export PYTHONHISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/python/python_history"
 export STACK_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/stack"

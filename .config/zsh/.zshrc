@@ -1,36 +1,37 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+
 # Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
-setopt autocd		# Automatically cd into typed directory.
+autoload -U colors && colors
+setopt autocd
 setopt interactive_comments
 
-# History in cache directory:
+# History in cache directory
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
-# Basic auto/tab complete:
+# Basic auto/tab complete
 autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(
-  docker
-  git
-  gitignore
-  pip
-  sudo
-  colored-man-pages
-)
+if [[ -d "/usr/local/bin" ]] && [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
+    export PATH="/usr/local/bin:$PATH"
+fi
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin"
-export PATH="$CARGO_HOME/bin:$PATH"
+if [[ -d "$HOME/.local/bin" ]] && [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 
+# Add cargo binaries to path
+if [[ -n "$CARGO_HOME" ]]; then
+    export PATH="$CARGO_HOME/bin:$PATH"
+fi
+
+# Add haskell binaries to path
 if [[ -d "$HOME/.cabal/bin" ]]; then
     export PATH="$HOME/.cabal/bin:$PATH"
 fi
@@ -44,34 +45,19 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 fi
 
-export MANPATH="/usr/local/man:$MANPATH"
-export LANG=en_US.UTF-8
-export ARCHFLAGS="-arch x86_64"
-
 # SSH fix
 alias ssh='TERM=xterm-256color \ssh'
 
-# Kitty terminal shortcuts
-alias icat="kitty +kitten icat"
-alias kdiff="kitty +kitten diff"
-
 # Neovim shortcuts
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
 alias nvimdiff="nvim -d"
-alias vimdiff="nvim -d"
 
 # Newsboat shortcut
 alias newsboat="newsboat --refresh-on-start"
 
 # Exa shortcuts
-alias ls='exa'
-alias la='exa -a'
-alias ll='exa -al'
-alias e='ls --git --classify'
-alias ea='la --git --classify'
-alias el='ll --git --classify'
+alias e='exa --git --classify'
+alias ea='exa --git --classify'
+alias el='exa --git --classify'
 
 # rsync cp
 alias cpv='rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress'
@@ -88,83 +74,83 @@ alias pacrm="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sud
 alias paclean='pacman -Qtdq | sudo pacman -Rns -'
 
 # Dotfile management shortcuts
-alias editdots="vim $HOME/Documents/dotfiles/"
+alias editdots="nvim $HOME/Documents/dotfiles/"
 alias deploydots="$HOME/Documents/dotfiles/deploy.sh"
 
 alias cross='sudo env "PATH=$PATH" "RUSTUP_HOME=$(echo ~/.rustup)" cross'
 
-# Vscode
-alias c='code'
-alias ci='code-insiders'
+# fzf
+if [[ -d "/usr/share/fzf" ]]; then
+    # arch location
+    FZF_SHELL_DIR="/usr/share/fzf"
+elif [[ -d "$(brew --prefix)/opt/fzf/shell" ]]; then
+    # mac location
+    FZF_SHELL_DIR="$(brew --prefix)/opt/fzf/shell"
+else
+    echo "fzf shell dir not found"
+fi
 
-prompt_context() {
-  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
-  fi
-}
+[[ $- == *i* ]] && source "${FZF_SHELL_DIR}/completion.zsh" 2> /dev/null
+source "${FZF_SHELL_DIR}/key-bindings.zsh"
 
-# fzf 
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+if [[ -x "$(command -v zoxide)" ]]; then
+    eval "$(zoxide init zsh)"
 
-# kill|ps compleations
-zstyle ':completion:*:*:*:*:processes' \
-    command "ps -u $USER -o pid,user,comm -w -w"
-zstyle ':fzf-tab:complete:(kill|ps):argument-rest' \
-    'fzf-preview [[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:(kill|ps):argument-rest' \
-    fzf-flags --preview-window=down:3:wrap
+    c () {
+        if [[ -x "$(command -v code-insiders)" ]]; then
+            CODE=code-insiders
+        elif [[ -x "$(command -v code)" ]]; then
+            CODE=code
+        else
+            echo "No code editor found"
+            return 1
+        fi
 
-# systemctl compleations
-zstyle ':fzf-tab:complete:systemctl-*:*' \
-    fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+        if [[ "$#" -eq 0 ]]; then
+            $CODE .
+        elif [[ "$#" -eq 1 ]] && [[ -d "$1" ]]; then
+            (cd "$1" && $CODE "$1")
+        elif [[ "$#" -eq 1 ]] && [[ -e "$1" ]]; then
+            $CODE "$1"
+        else
+            \builtin local result
+            result="$(\command zoxide query --exclude "$(\builtin pwd -L)" -- "$@")" &&
+                (cd "${result}" && $CODE "${result}")
+        fi
+    }
 
-# env compleations
-zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
-	fzf-preview 'echo ${(P)word}'
+    n () {
+        if [[ "$#" -eq 0 ]]; then
+            nvim .
+        elif [[ "$#" -eq 1 ]] && [[ -d "$1" ]]; then
+            $(cd "$1" && nvim "$1")
+        elif [[ "$#" -eq 1 ]] && [[ -e "$1" ]]; then
+            nvim "$1"
+        else
+            \builtin local result
+            result="$(\command zoxide query --exclude "$(\builtin pwd -L)" -- "$@")" &&
+                (cd "${result}" && nvim "${result}")
+        fi
+    }
 
-# git compleations
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' \
-    fzf-preview 'git diff $word | delta'
-zstyle ':fzf-tab:complete:git-log:*' \
-    fzf-preview 'git log --color=always $word'
-zstyle ':fzf-tab:complete:git-help:*' \
-    fzf-preview 'git help $word | bat -plman --color=always'
-zstyle ':fzf-tab:complete:git-show:*' \
-    fzf-preview \
-	'case "$group" in
-	    "commit tag") git show --color=always $word ;;
-	    *) git show --color=always $word | delta ;;
-	esac'
-zstyle ':fzf-tab:complete:git-checkout:*' \
-    fzf-preview \
-	'case "$group" in
-	    "modified file") git diff $word | delta ;;
-	    "recent commit object name") git show --color=always $word | delta ;;
-	    *) git log --color=always $word ;;
-	esac'
+else
+    echo "zoxide not found"
+fi
 
-# man compleations
-zstyle ':fzf-tab:complete:(\\|)run-help:*' \
-    fzf-preview 'run-help $word'
-zstyle ':fzf-tab:complete:(\\|*/|)man:*' \
-    fzf-preview 'man $word'
-
-command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
-command -v starship >/dev/null && eval "$(starship init zsh)"
-
-# GITSTATUS_LOG_LEVEL=DEBUG
-# source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
+if [[ -x "$(command -v starship)" ]]; then
+    eval "$(starship init zsh)"
+else
+    echo "starship not found"
+fi
 
 timeshell() {
-shell=${1-$SHELL}
-  echo "Timing $shell"
-  unset FIG_TERM
-  unset FIG_HOSTNAME
-  unset FIGTERM_SESSION_ID
-  unset FIG_LOG_LEVEL
-  for i in $(seq 1 10); do /usr/bin/time $shell -li -c exit; 
-  done
+    shell=${1-$SHELL}
+    echo "Timing $shell"
+    unset FIG_TERM
+    unset FIG_HOSTNAME
+    unset FIGTERM_SESSION_ID
+    unset FIG_LOG_LEVEL
+    for i in $(seq 1 10); do /usr/bin/time $shell -li -c exit; done
 }
 
 # Fig post block. Keep at the bottom of this file.
