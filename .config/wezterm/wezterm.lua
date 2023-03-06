@@ -1,7 +1,6 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
-
 for _, v in ipairs(wezterm.glob('wezterm.config_dir' .. 'colors')) do
   wezterm.add_to_config_reload_watch_list(v)
 end
@@ -9,9 +8,14 @@ end
 
 return {
   font_size = 11.0,
-  font = wezterm.font 'Hack',
+  font = wezterm.font_with_fallback {
+    'Hack Nerd Font Mono',
+    'Hack Nerd Font',
+    'Hack',
+    'JetBrains Mono',
+  },
   color_scheme = "moonfly",
-  window_background_opacity = 0.8,
+  window_background_opacity = 0.95,
 
   use_fancy_tab_bar = false,
 

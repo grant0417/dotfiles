@@ -1,17 +1,10 @@
 export LANG=en_US.UTF-8
 
-export EDITOR="nvim"
-export TERMINAL="kitty"
-export BROWSER="firefox-developer-edition"
-export READER="zathura"
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-
-export LESSHISTFILE="-"
 
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
@@ -32,7 +25,6 @@ export PGSERVICEFILE="${XDG_CONFIG_HOME:-$HOME/.config}/pg/pg_service.conf"
 
 export PYTHONHISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/python/python_history"
 export STACK_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/stack"
-export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export MINIKUBE_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/minikube"
 export CUDA_CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache}/nv"
 
@@ -43,6 +35,65 @@ export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/docker"
 export MACHINE_STORAGE_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/docker-machine"
 
+if [[ -d "/usr/local/bin" ]] && [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
+    export PATH="/usr/local/bin:$PATH"
+fi
+
+# if on macOS, add homebrew to path
+if [[ "$OSTYPE" == "darwin"* ]] && [[ -x "$(command -v brew)" ]]; then
+    export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"
+fi
+
+if [[ -d "$HOME/.local/bin" ]] && [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Add cargo binaries to path
+if [[ -n "$CARGO_HOME" ]]; then
+    export PATH="$CARGO_HOME/bin:$PATH"
+fi
+
+# Add haskell binaries to path
+if [[ -d "$HOME/.cabal/bin" ]]; then
+    export PATH="$HOME/.cabal/bin:$PATH"
+fi
+
+if [[ -d "$HOME/.ghcup/bin" ]]; then
+    export PATH="$HOME/.ghcup/bin:$PATH"
+fi
+
+# Editor: nvim, vim, vi
+if [ -x "$(command -v nvim)" ]; then
+    export EDITOR="nvim"
+elif [ -x "$(command -v vim)" ]; then
+    export EDITOR="vim"
+elif [ -x "$(command -v vi)" ]; then
+    export EDITOR="vi"
+fi
+
+# Terminal: wezter, kitty, alacritty, xterm
+if [ -x "$(command -v wezterm)" ]; then
+    export TERMINAL="wezterm"
+elif [ -x "$(command -v kitty)" ]; then
+    export TERMINAL="kitty"
+elif [ -x "$(command -v alacritty)" ]; then
+    export TERMINAL="alacritty"
+elif [ -x "$(command -v xterm)" ]; then
+    export TERMINAL="xterm"
+fi
+
+# Browser: firefox-developer-edition, firefox, chromium
+if [ -x "$(command -v firefox-developer-edition)" ]; then
+    export BROWSER="firefox-developer-edition"
+elif [ -x "$(command -v firefox)" ]; then
+    export BROWSER="firefox"
+elif [ -x "$(command -v chromium)" ]; then
+    export BROWSER="chromium"
+fi
+
+export READER="zathura"
+
+export LESSHISTFILE="-"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 
 export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
@@ -52,3 +103,5 @@ export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 [ -f "${CARGO_HOME}/env" ] && . "${CARGO_HOME}/env"
+
+export ZSH_ENV_LOADED=1

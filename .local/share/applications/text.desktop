@@ -2,4 +2,4 @@
 [Desktop Entry]
 Type=Application
 Name=Text editor
-Exec=/bin/alacritty -e nvim %u
+Exec=/bin/wezterm start -- nvim %u

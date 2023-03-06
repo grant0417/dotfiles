@@ -2,4 +2,3 @@
 Type=Application
 Name=Web Browser
 Exec=/bin/firefox-developer-edition %u
-
