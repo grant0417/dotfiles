@@ -13,6 +13,8 @@ return {
     'Hack Nerd Font',
     'Hack',
     'JetBrains Mono',
+    'Noto Color Emoji',
+    'Symbols Nerd Font Mono',
   },
   color_scheme = "moonfly",
   window_background_opacity = 0.95,
@@ -25,6 +27,12 @@ return {
   scrollback_lines = 10000000,
   enable_kitty_keyboard = true,
   use_ime = true,
+  enable_wayland = true,
+
+  show_update_window = false,
+  check_for_updates = false,
+
+  warn_about_missing_glyphs=false,
 
   keys = {
     { key = "f", mods = "CTRL|SHIFT", action = act.Search { Regex = '' } },
