@@ -1,5 +1,6 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$ZDOTDIR/env.zsh" ]] && [[ "$OSTYPE" == "darwin"* ]] && source "$ZDOTDIR/env.zsh"
 
 # Enable colors and change prompt:
 autoload -U colors && colors
@@ -18,60 +19,13 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-
-# SSH fix
-alias ssh='TERM=xterm-256color \ssh'
-
-# Neovim shortcuts
-alias nvimdiff="nvim -d"
-
-alias hx="helix"
-
-# Newsboat shortcut
-alias newsboat="newsboat --refresh-on-start"
-
-# Exa shortcuts
-alias e='exa --git --classify'
-alias ea='exa --git --classify'
-alias el='exa --git --classify'
-
-# rsync cp
-alias cpv='rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress'
-
-# Docker
-# shellcheck disable=SC2142
-alias dsh='docker exec -it $(  docker ps | fzf | awk '"'"'{print $1;}'"'"'  ) sh'
-# shellcheck disable=SC2142
-alias dbash='docker exec -it $(  docker ps | fzf | awk '"'"'{print $1;}'"'"'  ) bash'
-# shellcheck disable=SC2142
-alias drm='docker rm $(  docker ps | fzf | awk '"'"'{print $1;}'"'"'  )'
-# shellcheck disable=SC2142
-alias drma='docker rm $(  docker ps -a | fzf | awk '"'"'{print $1;}'"'"'  )'
-
-# pacman
-# shellcheck disable=SC2142
-alias paci="pacman -Slq | fzf --multi --preview 'cat <(pacman -Si {1}) <(pacman -Fl {1} | awk \"{print \$2}\")' | xargs -ro sudo pacman -S"
-alias pacrm="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
-alias paclean='pacman -Qtdq | sudo pacman -Rns -'
-
-# Dotfile management shortcuts
-alias editdots="nvim \$HOME/Documents/dotfiles/"
-alias deploydots="\$HOME/Documents/dotfiles/deploy.sh"
-
-alias cross='sudo env "PATH=$PATH" "RUSTUP_HOME=$(echo ~/.rustup)" cross'
-
-# Git
-alias ga='git add'
-alias gc='git commit'
-alias gw='git worktree'
-alias gs='git status'
-alias gpr='git pull --rebase'
+[[ -f "$ZDOTDIR/alias.zsh" ]] && source "$ZDOTDIR/alias.zsh"
 
 # fzf
 if [[ -d "/usr/share/fzf" ]]; then
     # arch location
     FZF_SHELL_DIR="/usr/share/fzf"
-elif [[ -d "$(brew --prefix)/opt/fzf/shell" ]]; then
+elif [[ -x $(command -v brew) ]] && [[ -d "$(brew --prefix)/opt/fzf/shell" ]]; then
     # mac location
     FZF_SHELL_DIR="$(brew --prefix)/opt/fzf/shell"
 else
