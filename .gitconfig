@@ -1,0 +1,32 @@
+[user]
+    name = Grant Gurvis
+    email = grant@gurvis.net
+[core]
+    editor = nvim
+    pager = delta --dark
+    excludesfile = ~/.config/git/ignore
+[init]
+    defaultBranch = main
+[color]
+    ui = true
+[status]
+    displaycommentprefix = true
+[push]
+    default = simple
+    autoSetupRemote = true
+[rebase]
+    autosquash = true
+[commit]
+    template= ~/.gitmessage
+[merge]
+    tool = nvimdiff
+[mergetool]
+    prompt = true
+[difftool]
+    prompt = false
+[diff]
+    tool = nvimdiff
+[credential "https://github.com"]
+    helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+    helper = !gh auth git-credential

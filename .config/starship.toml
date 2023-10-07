@@ -90,11 +90,11 @@ format = '[$symbol]($style)'
 symbol = " "
 
 [memory_usage]
-symbol = " "
+symbol = "󰍛 "
 
 [nim]
 format = '[$symbol]($style)'
-symbol = " "
+symbol = " "
 
 [nix_shell]
 symbol = " "
@@ -107,14 +107,14 @@ symbol = " "
 format = '[$symbol(\($switch_indicator$switch_name\) )]($style)'
 
 [package]
-symbol = " "
+symbol = "󰏗 "
 
 [perl]
 format = '[$symbol]($style)'
 
 [php]
 format = '[$symbol]($style)'
-symbol = " "
+symbol = " "
 
 [pulumi]
 format = '[$symbol$stack]($style)'

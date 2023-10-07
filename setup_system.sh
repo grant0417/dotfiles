@@ -1,12 +1,12 @@
 #!/bin/sh
 
-GREEN="$(printf "$(tput bold)$(tput setaf 2)")"
+GREEN="$(printf "%s%s" "$(tput bold)" "$(tput setaf 2)")"
 RESET="$(tput sgr0)"
-function log {
+log() {
   echo "${GREEN}${1}${RESET}"
 }
 
-if command -v systemctl &> /dev/null; then
+if command -v systemctl > /dev/null 2>&1; then
   log 'Setting up systemctl services'
   sudo systemctl enable --now systemd-timesyncd.service
 else 

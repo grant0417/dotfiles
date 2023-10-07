@@ -94,7 +94,7 @@ timeshell() {
     unset FIG_HOSTNAME
     unset FIGTERM_SESSION_ID
     unset FIG_LOG_LEVEL
-    for _ in $(seq 1 10); do /usr/bin/time "$shell" -li -c exit; done
+    for _ in $(seq 1 10); do time "$shell" -li -c exit; done
 }
 
 # Fig post block. Keep at the bottom of this file.
