@@ -1,75 +1,114 @@
-{ config, pkgs, ... }:
-
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "grant";
-  home.homeDirectory = "/home/grant";
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ./programs
+  ];
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.stateVersion = "23.05";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = with pkgs; [
+    zsh
+    fish
+    bash
+
+    git
+    neovim
+    rustup
+
+    eza
+    bat
+    fd
+    ripgrep
+    jq
+
     nixfmt
     nil
 
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    bitwarden-cli
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (pkgs.writeShellScriptBin "home-switch" ''
+      cd ~/dotfiles && git add .
+      home-manager switch --flake ~/dotfiles "$@"
+    '')
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    (pkgs.writeShellScriptBin "home-build" ''
+      cd ~/dotfiles && git add .
+      home-manager build --flake ~/dotfiles "$@"
+    '')
+
+    (pkgs.writeShellApplication {
+      name = "download-audio";
+      runtimeInputs = [yt-dlp];
+      text = builtins.readFile ./bin/download-audio;
+    })
+
+    (pkgs.writeShellScriptBin "batch-download-audio"
+      (builtins.readFile ./bin/batch-download-audio))
+
+    (pkgs.writeShellApplication {
+      name = "sbw";
+      runtimeInputs = [libsecret bitwarden];
+      text = ''
+        if [ "$#" -eq 1 ] && [ "$1" = "login" ]; then
+          bw login --raw | secret-tool store --label="Bitwarden" bitwarden session
+        else
+          BW_SESSION=$(secret-tool lookup bitwarden session) bw "$@"
+        fi
+      '';
+    })
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  xdg.enable = true;
+
+  home.shellAliases = {
+    ls = "eza";
+    l = "eza --git --git-repo";
+  };
+
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    ".config" = {
+      source = ./config;
+      recursive = true;
+    };
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+    ".local" = {
+      source = ./local;
+      recursive = true;
+    };
   };
 
-  # You can also manage environment variables but you will have to manually
-  # source
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/grant/etc/profile.d/hm-session-vars.sh
-  #
-  # if you don't want to manage your shell through Home Manager.
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
+  home.sessionVariables = let
+    commonVars = {
+      EDITOR = "nvim";
+      TERMINAL = "wezterm";
+      READER = "zathura";
+      PAGER = "less";
+      BROWSER = "firefox-developer-edition";
+
+      CARGO_HOME = "${config.xdg.dataHome}/cargo";
+      GOPATH = "${config.xdg.dataHome}/go";
+      RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+    };
+    linuxVars = {OS = "linux";};
+    darwinVars = {OS = "darwin";};
+  in
+    commonVars
+    // (
+      if pkgs.stdenv.isLinux
+      then linuxVars
+      else if pkgs.stdenv.isDarwin
+      then darwinVars
+      else {}
+    );
+
+  programs.vscode.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  programs.zsh.enable = true;
 }

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+FILE_FORMAT="flac"
+
+case "$1" in
+  *list=*) :
+    yt-dlp -R 10 -i -c --yes-playlist -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s" --add-metadata --socket-timeout 5 "$1"
+  ;;
+
+  *) :
+    yt-dlp -R 10 -i -f bestaudio --extract-audio --audio-format $FILE_FORMAT --audio-quality 0 -4 -o "%(title)s.%(ext)s" --add-metadata --socket-timeout 5 "$1"
+  ;;
+esac
