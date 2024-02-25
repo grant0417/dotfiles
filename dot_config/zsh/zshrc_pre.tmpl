@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "darwin" }}
+if [ -f "$ZDOTDIR/env.zsh" ]; then
+    source "$ZDOTDIR/env.zsh"
+fi
+{{ end }}

@@ -1,0 +1,31 @@
+[core]
+    editor = "nvim"
+
+[credential "https://github.com"]
+    helper = "gh auth git-credential"
+
+[diff]
+    external = "difft --color auto --background dark --display side-by-side"
+
+[filter "lfs"]
+    clean = "git-lfs clean -- %f"
+    process = "git-lfs filter-process"
+    required = true
+    smudge = "git-lfs smudge -- %f"
+
+[init]
+    defaultBranch = "main"
+
+[push]
+    autoSetupRemote = true
+    default = "simple"
+
+[rebase]
+    autosquash = true
+
+[status]
+    displaycommentprefix = true
+
+[user]
+    email = {{ .email | quote }}
+    name = "Grant Gurvis"

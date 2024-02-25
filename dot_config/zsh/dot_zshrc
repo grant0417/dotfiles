@@ -1,6 +1,4 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-[[ -f "$ZDOTDIR/env.zsh" ]] && [[ "$OSTYPE" == "darwin"* ]] && source "$ZDOTDIR/env.zsh"
+[[ -f "$ZDOTDIR/zshrc_pre" ]] && source "$ZDOTDIR/zshrc_pre"
 
 # Enable colors and change prompt:
 autoload -U colors && colors
@@ -12,6 +10,14 @@ HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS
+unsetopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+unsetopt HIST_EXPIRE_DUPS_FIRST
+setopt SHARE_HISTORY
+unsetopt EXTENDED_HISTORY
+
 # Basic auto/tab complete
 autoload -U compinit
 zstyle ':completion:*' menu select
@@ -21,13 +27,17 @@ _comp_options+=(globdots)		# Include hidden files.
 
 [[ -f "$ZDOTDIR/alias.zsh" ]] && source "$ZDOTDIR/alias.zsh"
 
+if [[ -x $(command -v brew) ]]; then
+    BREW_PREFIX="$(brew --prefix)"
+fi
+
 # fzf
 if [[ -d "/usr/share/fzf" ]]; then
     # arch location
     FZF_SHELL_DIR="/usr/share/fzf"
-elif [[ -x $(command -v brew) ]] && [[ -d "$(brew --prefix)/opt/fzf/shell" ]]; then
+elif [[ -x "$BREW_PREFIX" ]] && [[ -d "$BREW_PREFIX/opt/fzf/shell" ]]; then
     # mac location
-    FZF_SHELL_DIR="$(brew --prefix)/opt/fzf/shell"
+    FZF_SHELL_DIR="$BREW_PREFIX/opt/fzf/shell"
 else
     echo "fzf shell dir not found"
 fi
@@ -96,6 +106,3 @@ timeshell() {
     unset FIG_LOG_LEVEL
     for _ in $(seq 1 10); do time "$shell" -li -c exit; done
 }
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

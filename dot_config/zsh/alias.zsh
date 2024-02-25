@@ -6,10 +6,9 @@ alias hx="helix"
 # Newsboat shortcut
 alias newsboat="newsboat --refresh-on-start"
 
-# Exa shortcuts
-alias e='exa --git --classify'
-alias ea='exa --git --classify'
-alias el='exa --git --classify'
+# eza shortcuts
+alias ls='eza'
+alias e='eza --git --classify'
 
 # rsync cp
 alias cpv='rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress'
