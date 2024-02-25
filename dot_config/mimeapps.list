@@ -11,9 +11,9 @@
 
 # x-scheme-handler/mailto=mail.desktop;
 
-# application/postscript=pdf.desktop;
-# application/pdf=pdf.desktop;
-# application/epub+zip=pdf.desktop;
+application/postscript=org.pwmt.zathura.desktop
+application/pdf=org.pwmt.zathura.desktop
+application/epub+zip=org.pwmt.zathura.desktop
 
 # image/png=img.desktop;
 # image/jpeg=img.desktop;
@@ -27,6 +27,6 @@
 
 # inode/directory=file.desktop;
 
-# x-scheme-handler/http=browser.desktop;
-# x-scheme-handler/https=browser.desktop;
-# text/html=browser.desktop;
+x-scheme-handler/http=firefoxdeveloperedition.desktop;firefox.desktop;chromium.desktop
+x-scheme-handler/https=firefoxdeveloperedition.desktop;firefox.desktop;chromium.desktop
+text/html=firefoxdeveloperedition.desktop;firefox.desktop;chromium.desktop

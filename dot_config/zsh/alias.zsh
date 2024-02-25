@@ -41,3 +41,9 @@ alias gc='git commit'
 alias gw='git worktree'
 alias gs='git status'
 alias gpr='git pull --rebase'
+
+# Chezmoi
+alias ch="chezmoi"
+alias chapply="chezmoi apply"
+alias chgit="chezmoi git --"
+

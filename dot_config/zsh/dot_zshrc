@@ -106,3 +106,9 @@ timeshell() {
     unset FIG_LOG_LEVEL
     for _ in $(seq 1 10); do time "$shell" -li -c exit; done
 }
+
+[[ -f "$HOME/.local/share/shell-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+    source "$HOME/.local/share/shell-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+[[ -f "$HOME/.local/share/shell-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    source "$HOME/.local/share/shell-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

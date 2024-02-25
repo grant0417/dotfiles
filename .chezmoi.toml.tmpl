@@ -1,0 +1,7 @@
+{{ $email := promptStringOnce . "email" "What is your email address" }}
+
+[data]
+email = {{ .email | toToml }}
+
+[diff]
+pager = "delta"
