@@ -1,1 +1,0 @@
-{{ (rbw "personal-ssh-key") | jq ".fields[] | select(.name==\"priv\") | .value" | first | b64dec | trim }}

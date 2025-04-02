@@ -1,9 +1,7 @@
 {{ $email := promptStringOnce . "email" "What is your email address" }}
-{{ $bwEmail := promptStringOnce . "bwEmail" "What is your Bitwarden email address" }}
 
 [data]
 email = {{ $email | toToml }}
-bwEmail = {{ $bwEmail | toToml }}
 
 [diff]
 pager = "delta"

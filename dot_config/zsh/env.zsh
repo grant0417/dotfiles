@@ -121,3 +121,7 @@ fi
 [ -f "${CARGO_HOME}/env" ] && . "${CARGO_HOME}/env"
 
 export ZSH_ENV_LOADED=1
+
+if [[ -x "$(command -v mise)" ]]; then
+    eval "$(mise activate zsh)"
+fi
