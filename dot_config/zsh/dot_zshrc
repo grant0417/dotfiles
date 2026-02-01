@@ -119,3 +119,8 @@ timeshell() {
 
 [[ -f "$HOME/.local/share/shell-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
     source "$HOME/.local/share/shell-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+fi
+

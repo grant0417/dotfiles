@@ -37,8 +37,11 @@ export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/pass"
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 
-export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
-export MACHINE_STORAGE_PATH="${XDG_DATA_HOME}/docker-machine"
+# if not macos, set docker config and machine storage path
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+    export MACHINE_STORAGE_PATH="${XDG_DATA_HOME}/docker-machine"
+fi
 
 
 if [[ -d "/usr/local/bin" ]] && [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
